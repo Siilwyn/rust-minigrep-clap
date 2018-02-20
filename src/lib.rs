@@ -1,3 +1,5 @@
+extern crate clap;
+
 use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
@@ -29,16 +31,14 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
-        args.next();
-        
-        let query = match args.next() {
-            Some(arg) => arg,
+    pub fn new(args: clap::ArgMatches) -> Result<Config, &'static str> {
+        let query = match args.value_of("query") {
+            Some(arg) => arg.to_string(),
             None => return Err("Didn't get a query string"),
         };
         
-        let filename = match args.next() {
-            Some(arg) => arg,
+        let filename = match args.value_of("filename") {
+            Some(arg) => arg.to_string(),
             None => return Err("Didn't get a file name"),
         };
 
