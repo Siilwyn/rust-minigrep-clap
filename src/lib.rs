@@ -35,13 +35,18 @@ impl Config {
         let query = args.value_of("query").unwrap().to_string();
         let filename = args.value_of("filename").unwrap().to_string();
         let case_sensitive = args.is_present("case-sensitive");
-        
-        Ok(Config { query, filename, case_sensitive })
+
+        Ok(Config {
+            query,
+            filename,
+            case_sensitive,
+        })
     }
 }
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    contents.lines()
+    contents
+        .lines()
         .filter(|line| line.contains(query))
         .collect()
 }
@@ -72,10 +77,7 @@ safe, fast, productive.
 Pick three.
 Duct tape.";
 
-        assert_eq!(
-            vec!["safe, fast, productive."],
-            search(query, contents)
-        );
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
     }
 
     #[test]
