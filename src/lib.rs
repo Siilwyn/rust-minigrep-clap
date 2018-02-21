@@ -32,17 +32,9 @@ pub struct Config {
 
 impl Config {
     pub fn new(args: clap::ArgMatches) -> Result<Config, &'static str> {
-        let query = match args.value_of("query") {
-            Some(arg) => arg.to_string(),
-            None => return Err("Didn't get a query string"),
-        };
-        
-        let filename = match args.value_of("filename") {
-            Some(arg) => arg.to_string(),
-            None => return Err("Didn't get a file name"),
-        };
-
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        let query = args.value_of("query").unwrap().to_string();
+        let filename = args.value_of("filename").unwrap().to_string();
+        let case_sensitive = args.is_present("case-sensitive");
         
         Ok(Config { query, filename, case_sensitive })
     }
