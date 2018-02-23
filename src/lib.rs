@@ -2,7 +2,7 @@ extern crate clap;
 
 use std::error::Error;
 use std::fs::File;
-use std::io::prelude::*;
+use std::io::Read;
 
 pub fn run(config: Config) -> Result<(), Box<Error>> {
     let mut f = File::open(config.filename)?;
