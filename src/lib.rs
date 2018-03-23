@@ -5,10 +5,10 @@ use std::fs::File;
 use std::io::Read;
 
 pub fn run(config: Config) -> Result<(), Box<Error>> {
-    let mut f = File::open(config.filename)?;
+    let mut config_file = File::open(config.filename)?;
 
     let mut contents = String::new();
-    f.read_to_string(&mut contents)?;
+    config_file.read_to_string(&mut contents)?;
 
     let results = if config.case_sensitive {
         search(&config.query, &contents)

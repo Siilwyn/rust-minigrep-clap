@@ -14,13 +14,13 @@ fn main() {
         .arg(Arg::with_name("case-insensitive").env("CASE_INSENSITIVE"))
         .get_matches();
 
-    let config = Config::new(args).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {}", err);
+    let config = Config::new(args).unwrap_or_else(|error| {
+        eprintln!("Problem parsing arguments: {}", error);
         process::exit(1);
     });
 
-    if let Err(e) = minigrep::run(config) {
-        eprintln!("Application error: {}", e);
+    if let Err(error) = minigrep::run(config) {
+        eprintln!("Application error: {}", error);
         process::exit(1);
     }
 }
